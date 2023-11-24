@@ -1,4 +1,4 @@
-package com.farinas.customer.repository.entity;
+package com.farinas.customer.entity;
 
 import jakarta.persistence.*;
 

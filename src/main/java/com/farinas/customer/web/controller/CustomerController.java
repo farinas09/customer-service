@@ -41,13 +41,23 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateCategory(@Validated @RequestBody Customer customer, @PathVariable("id") int id, BindingResult bindingResult) {
-
-            return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity updateCustomer(@Validated @RequestBody Customer customer, @PathVariable("id") int id, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        customer.setId(Long.getLong(String.valueOf(id)));
+        return customerService.getCustomerById(customer.getId()).map(cus -> {
+            Customer response = customerService.updateCustomer(customer);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCategory(@PathVariable("id") int id) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> deleteCustomer(@PathVariable("id") Long id) {
+        if(customerService.deleteCustomer(id)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

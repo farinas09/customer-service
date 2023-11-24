@@ -53,7 +53,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer deleteCustomer(Customer customer) {
-        return null;
+    public boolean deleteCustomer(Long customerId) {
+        return getCustomerById(customerId).map(customer -> {
+            customerRepository.deleteById(customerId);
+            return true;
+        }).orElse(false);
     }
 }

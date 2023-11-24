@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Table(name = "Customer")
 public class Customer extends Person {
     private String password;
-    private String status;
+    private Boolean status;
 
     // Getters y setters
 
@@ -17,11 +17,11 @@ public class Customer extends Person {
         this.password = password;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 }
